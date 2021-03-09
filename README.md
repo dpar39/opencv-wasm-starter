@@ -9,3 +9,7 @@ Starter repo for projects using OpenCV in WebAssembly
 ```bash
 npm run build
 ```
+
+## Debugging the code in VSCode
+
+TODO:
