@@ -13,10 +13,12 @@ if [ -z "$2" ] ; then
 fi
 
 # Download OpenCV source code
-OPENCV_ZIP=$THIS_DIR/opencv-4.5.1.zip
+OPENCV_VERSION=4.5.1
+OPENCV_PACKAGE=opencv-$OPENCV_VERSION
+OPENCV_ZIP=$THIS_DIR/${OPENCV_PACKAGE}.zip
 if [ ! -f $OPENCV_ZIP ]; then
-    wget -O $OPENCV_ZIP https://github.com/opencv/opencv/archive/4.5.1.zip
-    unzip $OPENCV_ZIP
+    wget -O $OPENCV_ZIP https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
+    unzip -qq $OPENCV_ZIP
 fi
 
 BUILD_DIR=$THIS_DIR/build_${BUILD_PLATFORM}_${BUILD_CONFIG}
@@ -32,8 +34,6 @@ if [ $BUILD_PLATFORM == "wasm" ]; then
     echo 'Running wasm build ... ${BUILD_DIR} '
     source /emsdk/emsdk_env.sh
     cmake -G Ninja -B${BUILD_DIR} \
-       -DCMAKE_C_FLAGS='-s USE_PTHREADS=0'  \
-       -DCMAKE_CXX_FLAGS='-s USE_PTHREADS=0'  \
        -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
        -DCMAKE_BUILD_TYPE=${BUILD_CONFIG} \
        -DCV_ENABLE_INTRINSICS=OFF \
@@ -83,7 +83,7 @@ if [ $BUILD_PLATFORM == "wasm" ]; then
        -DCMAKE_MODULE_PATH=$EMSDK/upstream/emscripten/cmake \
        -DCMAKE_TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake \
        -DBUILD_LIST=core,imgproc,imgcodecs,objdetect,dnn \
-       $THIS_DIR/opencv-4.5.1
+       $THIS_DIR/$OPENCV_PACKAGE
 fi
 
 
@@ -123,7 +123,7 @@ if [ $BUILD_PLATFORM == "x64" ]; then
        -DBUILD_opencv_python_bindings_generator=OFF \
        -DBUILD_TBB=ON \
        -DBUILD_LIST=imgproc,imgcodecs,objdetect,dnn,highgui \
-       $THIS_DIR/opencv-4.5.1
+       $THIS_DIR/$OPENCV_PACKAGE
 fi
 
 cd $BUILD_DIR && ninja && ninja install && cd ..

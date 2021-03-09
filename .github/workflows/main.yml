@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Builds and publish this WASM
+name: Builds and publish this project
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -15,6 +15,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - uses: actions/cache@v2
+        with:
+          path: 'thirdparty'
+          key: ${{ runner.os }}-modules-${{ hashFiles('thirdparty/build-opencv.sh') }}
 
       - name: Install dependencies
         run: npm install
