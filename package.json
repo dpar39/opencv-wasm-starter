@@ -1,0 +1,42 @@
+{
+  "name": "opencv-wasm-starter",
+  "version": "1.0.0",
+  "description": "Sample OpenCV",
+  "author": "Darien Pardinas",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpar39/libdemo.git"
+  },
+  "keywords": [ "opencv" ],
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "chai": "^4.3.3",
+    "jest": "^26.0.1",
+    "karma": "^6.1.1",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^8.3.1",
+    "puppeteer": "^8.0.0",
+    "requirejs": "^2.3.6"
+  },
+  "files": [
+    "libdemo.*"
+  ],
+  "types": "libdemo.d.ts",
+  "scripts": {
+    "build-docker": "docker build . -t opencv-wasm-builder",
+    "build-wasm": "docker run -u $(id -u):$(id -g) -v $PWD:/app opencv-wasm-builder ./build.sh release wasm",
+    "build-bundle": "node bundle-with-wasm.js",
+    "build1": "npm run build-docker && npm run build-wasm && node bundle-with-wasm.js",
+    "build": "npm run build-wasm ",
+    "start": "jest --watchAll",
+    "test-jest": "jest",
+    "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "typescript": ">= 3.8.3"
+  }
+}
