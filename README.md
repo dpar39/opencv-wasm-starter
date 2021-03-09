@@ -1,4 +1,5 @@
-# SVG-PNG-Tiler
+# OpenCV WASM Starter
+
 
 [Live Demo Here](https://dpar39.github.io/opencv-wasm-starter/)
 
