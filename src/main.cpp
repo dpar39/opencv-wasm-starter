@@ -1,11 +1,15 @@
 #include "utilities.h"
-#include <emscripten/bind.h>
+
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
 #include <iostream>
 #include <regex>
 #include <sstream>
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten/bind.h>
+#endif
 
 std::string setImage(std::string buffer)
 {
@@ -35,7 +39,6 @@ std::string setImage(std::string buffer)
 
 std::string getOpenCvVersion()
 {
-
     std::stringstream ss;
     ss << "OpenCV version : " << CV_VERSION << std::endl;
     ss << "Major version : " << CV_MAJOR_VERSION << std::endl;
@@ -44,8 +47,16 @@ std::string getOpenCvVersion()
     return ss.str();
 }
 
+#ifdef __EMSCRIPTEN__
 EMSCRIPTEN_BINDINGS(my_module)
 {
     emscripten::function("getOpenCvVersion", &getOpenCvVersion);
     emscripten::function("setImage", &setImage);
 }
+#else
+#include <iostream>
+int main(int argc, char **argv)
+{
+    std::cout << "This program is intended to target WebAssembly only." << std::endl;
+}
+#endif

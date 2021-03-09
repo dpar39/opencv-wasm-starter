@@ -2,7 +2,6 @@
 
 # Build thirdparty libraries
 cd thirdparty
-chmod +x build-opencv.sh
 bash ./build-opencv.sh "$1" "$2"
 cd ..
 
