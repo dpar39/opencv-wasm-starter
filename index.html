@@ -36,18 +36,23 @@
         height: 100vh;
       }
       img {
-        max-width: 49vw;
+        max-width: 100%;
       }
-     
     </style>
   </head>
 
   <body class="bg-dark">
-    <div>
-      <img src="sample.jpg" alt="">
-      <img id="gray">
+    <div class="container-fluid">
+      <div class="row"><div class="col my-3"><h4 class="text-light text-center">Convert an image to gray scale using OpenCV in WebAssembly</h4></div></div>
+      <div class="row">
+        <div class="col">
+          <img src="sample.jpg" alt="" />
+        </div>
+        <div class="col">
+          <img id="gray" />
+        </div>
+      </div>
     </div>
-
 
     <script type="text/javascript" src="demo.js"></script>
     <script type="text/javascript">
@@ -58,13 +63,15 @@
         reader.onload = function (evt) {
           const dataurl = evt.target.result;
           const grayBase64 = Module.setImage(dataurl);
-          const img = document.getElementById('gray');
-          img.src = 'data:image/png;base64,' + grayBase64;
+          const img = document.getElementById("gray");
+          img.src = "data:image/png;base64," + grayBase64;
         };
         reader.readAsDataURL(blob.slice(0, blob.size, "image/jpeg"));
       }
 
-      Module.onRuntimeInitialized = () => { rgb2gray() };
+      Module.onRuntimeInitialized = () => {
+        rgb2gray();
+      };
     </script>
   </body>
 </html>
