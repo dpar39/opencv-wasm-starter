@@ -29,8 +29,7 @@
     "build-docker": "docker build . -t opencv-wasm-builder",
     "build-wasm": "docker run -u $(id -u):$(id -g) -v $PWD:/app opencv-wasm-builder ./build.sh release wasm",
     "build-bundle": "node bundle-with-wasm.js",
-    "build1": "npm run build-docker && npm run build-wasm && node bundle-with-wasm.js",
-    "build": "npm run build-wasm ",
+    "build": "npm run build-docker && npm run build-wasm && node bundle-with-wasm.js",
     "start": "jest --watchAll",
     "test-jest": "jest",
     "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js"
