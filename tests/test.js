@@ -1,18 +1,17 @@
 
-
 describe("test suite", (suite) => {
 
-  before((done) => {
+  // before((done) => {
 
-    Module.onRuntimeInitialized = (lib) => {
-      console.log(lib);
-      done();
-    };
-     console.log('Here')
-    setTimeout(x => done(), 2000)
-    
-  });
+  //   // Module.onRuntimeInitialized = (lib) => {
+  //   //   console.log(lib);
+  //   //   done();
+  //   // };
+  //   //  console.log('Here')
+  //   // setTimeout(x => done(), 2000)    
+  // });
 
-  it("converts large svg to png", async () => {
+  it("converts image to gray scale", async () => {
+    console.log('Implement me!!!');
   });
 });
