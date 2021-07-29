@@ -28,10 +28,10 @@ if [ -d $INSTALL_DIR ]; then
     exit
 fi
 
-
 # Build OpenCV
 if [ $BUILD_PLATFORM == "wasm" ]; then
     echo 'Running wasm build ... ${BUILD_DIR} '
+    sed -i 's/add_extra_compiler_option(-pthread)/#x#x#x#x#x#x#x#x#x#x/' $THIS_DIR/$OPENCV_PACKAGE/cmake/OpenCVCompilerOptions.cmake
     source /emsdk/emsdk_env.sh
     cmake -G Ninja -B${BUILD_DIR} \
        -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
@@ -82,13 +82,14 @@ if [ $BUILD_PLATFORM == "wasm" ]; then
        -DBUILD_opencv_python_bindings_generator=OFF \
        -DCMAKE_MODULE_PATH=$EMSDK/upstream/emscripten/cmake \
        -DCMAKE_TOOLCHAIN_FILE=$EMSDK/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake \
-       -DBUILD_LIST=core,imgproc,imgcodecs,objdetect,dnn \
+       -DBUILD_LIST=core,imgproc,imgcodecs,objdetect,dnn,ml,photo \
        $THIS_DIR/$OPENCV_PACKAGE
 fi
 
 
 if [ $BUILD_PLATFORM == "x64" ]; then
     echo 'Running x64 build ... '
+    sed -i 's/#x#x#x#x#x#x#x#x#x#x/add_extra_compiler_option(-pthread)/' $THIS_DIR/$OPENCV_PACKAGE/cmake/OpenCVCompilerOptions.cmake
     cmake -G Ninja -B${BUILD_DIR} \
        -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
        -DCMAKE_BUILD_TYPE=${BUILD_CONFIG} \
@@ -122,7 +123,7 @@ if [ $BUILD_PLATFORM == "x64" ]; then
        -DBUILD_opencv_python3=OFF \
        -DBUILD_opencv_python_bindings_generator=OFF \
        -DBUILD_TBB=ON \
-       -DBUILD_LIST=imgproc,imgcodecs,objdetect,dnn,highgui \
+       -DBUILD_LIST=imgproc,imgcodecs,objdetect,dnn,photo,ml,highgui \
        $THIS_DIR/$OPENCV_PACKAGE
 fi
 
