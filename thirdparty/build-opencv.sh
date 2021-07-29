@@ -25,7 +25,7 @@ BUILD_DIR=$THIS_DIR/build_${BUILD_PLATFORM}_${BUILD_CONFIG}
 INSTALL_DIR=$THIS_DIR/install_${BUILD_PLATFORM}_${BUILD_CONFIG}
 
 if [ -d $INSTALL_DIR ]; then
-    exit
+    exit # We have a build already
 fi
 
 # Build OpenCV
